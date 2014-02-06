@@ -1,0 +1,15 @@
+name: HiddenHealth
+main: uk.co.eluinhost.HiddenHealth.HiddenHealth
+version: 1.0
+description: Hide the player's health information from them.
+author: ghowden/Eluinhost
+website: insorum.com
+database: false
+depends: [ProtocolLib]
+permissions:
+    HiddenHealth.bypass.health:
+        description: Bypass the health hiding
+        default: false
+    HiddenHealth.bypass.hunger:
+        description: Bypass the hunger hiding
+        default: false
