@@ -1,9 +1,8 @@
 name: HiddenHealth
-main: uk.co.eluinhost.HiddenHealth.HiddenHealth
+main: uk.co.eluinhost.hiddenhealth.HiddenHealth
 version: 1.0
 description: Hide the player's health information from them.
 author: ghowden/Eluinhost
-website: insorum.com
 database: false
 depends: [ProtocolLib]
 permissions:
