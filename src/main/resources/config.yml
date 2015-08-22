@@ -1,2 +1,5 @@
-hideHealth: true
-hideHunger: true
+hide health: true
+hide hunger: true
+show health value: 20
+show hunger value: 20
+show saturation value: 5
