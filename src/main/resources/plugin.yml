@@ -1,5 +1,5 @@
 name: HiddenHealth
-main: uk.co.eluinhost.hiddenhealth.Entry
+main: gg.uhc.hiddenhealth.Entry
 version: 1.1
 description: Hide the player's health/hunger information from them.
 author: ghowden/Eluinhost

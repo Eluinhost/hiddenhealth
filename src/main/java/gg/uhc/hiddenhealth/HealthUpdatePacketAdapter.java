@@ -19,7 +19,7 @@
  * along with HiddenHealth.  If not, see <http ://www.gnu.org/licenses/>.
  */
 
-package uk.co.eluinhost.hiddenhealth;
+package gg.uhc.hiddenhealth;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.ListenerPriority;

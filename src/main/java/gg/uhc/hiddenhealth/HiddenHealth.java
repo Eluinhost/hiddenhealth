@@ -19,7 +19,7 @@
  * along with HiddenHealth.  If not, see <http ://www.gnu.org/licenses/>.
  */
 
-package uk.co.eluinhost.hiddenhealth;
+package gg.uhc.hiddenhealth;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import org.bukkit.plugin.Plugin;

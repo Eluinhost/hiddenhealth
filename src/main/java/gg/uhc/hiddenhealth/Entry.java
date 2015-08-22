@@ -19,7 +19,7 @@
  * along with HiddenHealth.  If not, see <http ://www.gnu.org/licenses/>.
  */
 
-package uk.co.eluinhost.hiddenhealth;
+package gg.uhc.hiddenhealth;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
