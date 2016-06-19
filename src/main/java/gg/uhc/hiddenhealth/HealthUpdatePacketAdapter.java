@@ -25,11 +25,19 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.reflect.StructureModifier;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
+import com.comphenix.protocol.wrappers.WrappedWatchableObject;
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.util.List;
+
 public class HealthUpdatePacketAdapter extends PacketAdapter {
+    protected static final WrappedDataWatcher.Serializer FLOAT_SERIALIZER = WrappedDataWatcher.Registry.get(Float.class);
+    protected static final WrappedDataWatcher.WrappedDataWatcherObject HEALTH_METADATA = new WrappedDataWatcher.WrappedDataWatcherObject(6, FLOAT_SERIALIZER);
 
     // the packet identifier for 0x06 Update Health, also contains hunger + saturation
     protected static final PacketType UPDATE_HEALTH_PACKET = PacketType.Play.Server.UPDATE_HEALTH;
@@ -71,17 +79,18 @@ public class HealthUpdatePacketAdapter extends PacketAdapter {
             // only process if it's metadata for the player it's being sent to
             if(event.getPlayer().getEntityId() != event.getPacket().getIntegers().read(0))  return;
 
-            // get the data watcher for the entity metadata
-            WrappedDataWatcher dataWatcher = new WrappedDataWatcher(event.getPacket().getWatchableCollectionModifier().read(0));
+            StructureModifier<List<WrappedWatchableObject>> metadata = event.getPacket().getWatchableCollectionModifier();
 
-            // get the health flag from index 6 of the metadata
-            Float health = dataWatcher.getFloat(6);
-
-            // if this metadata contained a health flag (!= null) and not dead (to avoid buggy client behaviour)
-            if(health != null && health > 0){
-                // set the health flag to the value
-                dataWatcher.setObject(6, hiddenHealth.getHealthValue());
-            }
+            metadata.write(0, Lists.transform(metadata.read(0), MODIFY_HEALTH));
         }
     }
+
+    protected final Function<WrappedWatchableObject, WrappedWatchableObject> MODIFY_HEALTH = new Function<WrappedWatchableObject, WrappedWatchableObject>() {
+        public WrappedWatchableObject apply(WrappedWatchableObject input) {
+            // if this metadata is health and not dead (to avoid buggy client behaviour)
+            if (input.getIndex() != 6 || (Float) input.getValue() <= 0) return input;
+
+            return new WrappedWatchableObject(HEALTH_METADATA, hiddenHealth.getHealthValue());
+        }
+    };
 }
